@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class placeholder.cs : MonoBehaviour {
+public class placeholder : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
