@@ -24,8 +24,6 @@ public class HeroScript : MonoBehaviour {
 
 	// Update is called once per physics frame
 	void FixedUpdate () {
-		float move;
-		move = Input.GetAxisRaw ("Horizontal");
-		rb.velocity = new Vector2 (move * baseSpeed, rb.velocity.y);
+		rb.velocity = new Vector2 (Input.GetAxisRaw ("Horizontal") * baseSpeed, Input.GetAxisRaw ("Vertical") * baseSpeed);
 	}
 }

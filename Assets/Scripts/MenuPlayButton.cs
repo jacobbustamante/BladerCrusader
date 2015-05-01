@@ -15,6 +15,6 @@ public class MenuPlayButton : MonoBehaviour {
 	}
 
 	void OnClick() {
-		Application.LoadLevel("Game");
+		Application.LoadLevel("Placeholder");
 	}
 }
