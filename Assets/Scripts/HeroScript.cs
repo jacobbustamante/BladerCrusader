@@ -25,6 +25,8 @@ public class HeroScript : MonoBehaviour {
 	// Update is called once per physics frame
 	void FixedUpdate () {
 		rb.velocity = new Vector2 (Input.GetAxisRaw ("Horizontal") * baseSpeed, Input.GetAxisRaw ("Vertical") * baseSpeed);
+
+		// Test build code for Fallessi install
 		GetComponent<SpriteRenderer>().color = new Color(rb.position.x, rb.position.y, 0.5f);
 	}
 }
