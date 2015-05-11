@@ -7,14 +7,25 @@ public class GameManagerScript : MonoBehaviour {
 	public int mapWidth, mapHeight;
 
 	private GameObject playerInstance;
+	public static GameManagerScript gameManager;
+
+	public int level = 4; 
+
 
 	void Awake() {
-		PlaceHero();
+		if (gameManager == null) {
+			DontDestroyOnLoad(this.gameObject);
+			gameManager = this;
+		} else if (gameManager != this) {
+			Destroy (this.gameObject);
+		} 
+
+
 	}
 
 	// Use this for initialization
 	void Start () {
-		playerInstance.SetActive(true);
+
 	}
 	
 	// Update is called once per frame
@@ -33,4 +44,13 @@ public class GameManagerScript : MonoBehaviour {
 	public GameObject GetPlayerInstance() {
 		return playerInstance;
 	}
+
+	public void StartLevel() {
+		PlaceHero();
+		playerInstance.SetActive(true);
+
+
+
+	}
+
 }
