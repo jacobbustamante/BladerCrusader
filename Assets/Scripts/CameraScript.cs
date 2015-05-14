@@ -8,7 +8,7 @@ public class CameraScript : MonoBehaviour
 	
 	private GameManagerScript gameManager;
 	private GameObject playerInstance;
-	private Camera camera;
+	private Camera cam;
 
 	private int mapHeight, mapWidth;
 	private float minX, minY, maxX, maxY;
@@ -16,7 +16,7 @@ public class CameraScript : MonoBehaviour
 	
 	void Awake() {
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
-		camera = this.GetComponent<Camera>();
+		cam = this.GetComponent<Camera>();
 	}
 
 	void Start () {
@@ -38,7 +38,7 @@ public class CameraScript : MonoBehaviour
 	void UpdateBorders() {
 		float tileOffset = -0.5f;
 
-		float camViewY = camera.orthographicSize;
+		float camViewY = cam.orthographicSize;
 		float camViewX = camViewY * (float)Screen.width / (float)Screen.height;
 
 		minX = camViewX + tileOffset;
