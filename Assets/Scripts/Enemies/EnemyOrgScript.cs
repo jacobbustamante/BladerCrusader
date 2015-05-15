@@ -17,4 +17,16 @@ public class EnemyOrgScript : EnemyScript {
 		base.Update();
 		MoveDirectlyTowardsTarget();
 	}
+	
+	// Collissions
+	void OnCollisionEnter2D(Collision2D coll)
+	{
+
+	}
+	
+	// Triggers
+	void OnTriggerEnter2D(Collider2D coll)
+	{
+
+	}
 }
