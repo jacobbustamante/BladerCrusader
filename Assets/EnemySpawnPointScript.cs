@@ -23,6 +23,10 @@ public class EnemySpawnPointScript : MonoBehaviour {
 	
 	}
 
+	public void StartLevel() {
+		SetSpawnPointParams();
+	}
+
 	public void SetSpawnPointParams() {
 
 		if (level < 3) {

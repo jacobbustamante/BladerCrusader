@@ -8,13 +8,13 @@ public class LevelManagerScript : MonoBehaviour {
 	public List<GameObject> spawnPoints;
 
 	void Awake() {
-
+		spawnPoints = new List<GameObject>();
 	}
 
 	// Use this for initialization
 	void Start () {
-		GameManagerScript.gameManager.StartLevel ();
 		CreateSpawnPoints ();
+		StartLevel();
 	}
 	
 	// Update is called once per frame
@@ -31,6 +31,13 @@ public class LevelManagerScript : MonoBehaviour {
 			spawnPoint.transform.position = new Vector3(Random.Range(0, mapWidth), Random.Range(0, mapHeight), 0);
 			spawnPoints.Add(spawnPoint);
 
+		}
+	}
+
+	private void StartLevel() {
+		GameManagerScript.gameManager.StartLevel ();
+		foreach (GameObject spawnPoint in spawnPoints) {
+			spawnPoint.GetComponent<EnemySpawnPointScript>().StartLevel();
 		}
 	}
 
