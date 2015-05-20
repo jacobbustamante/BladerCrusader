@@ -11,6 +11,8 @@ public class EnemySpawnPointScript : MonoBehaviour {
 	public int enemiesDefeated;
 	int level;
 
+	private float nextSpawnTime;
+
 	// Use this for initialization
 	void Start () {
 		level = GameManagerScript.gameManager.level;
@@ -20,17 +22,23 @@ public class EnemySpawnPointScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (enemyCountToSpawn > 0 && Time.time > nextSpawnTime) {
+			SpawnEnemy();
+			enemyCountToSpawn--;
+			nextSpawnTime = Time.time + spawnDelay;
+		}
 	}
 
 	public void StartLevel() {
 		SetSpawnPointParams();
+		nextSpawnTime = Time.time + spawnDelay;
 	}
 
 	public void SetSpawnPointParams() {
 
 		if (level < 3) {
 			spawnDelay = 5.0f;
+			enemyCountToSpawn = 3;
 			enemyTypes.Add(EnemyPool.enemyPool.Org);
 			enemyTypes.Add(EnemyPool.enemyPool.Specty);
 			enemyTypes.Add(EnemyPool.enemyPool.Snell);
@@ -49,5 +57,12 @@ public class EnemySpawnPointScript : MonoBehaviour {
 		}
 	}
 
+	private void SpawnEnemy() {
+		if (enemyTypes.Count > 0) {
+			int index = Random.Range(0, enemyTypes.Count);
+			GameObject newEnemy =  (GameObject) Object.Instantiate(enemyTypes[index]);
+			newEnemy.transform.position = this.transform.position;
+		}
+	}
 
 }
