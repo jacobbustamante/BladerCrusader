@@ -35,7 +35,7 @@ public class LevelManagerScript : MonoBehaviour {
 		int mapHeight = GameManagerScript.gameManager.mapHeight;
 		for (int i = 0; i < level; i++) {
 			GameObject spawnPoint = Object.Instantiate(enemySpawnPoint);
-			spawnPoint.transform.position = new Vector3(Random.Range(0, mapWidth), Random.Range(0, mapHeight), 0);
+			spawnPoint.transform.position = new Vector3(Random.Range(1, mapWidth-2), Random.Range(1, mapHeight-2), 0);
 			spawnPoints.Add(spawnPoint);
 			spawnPointScripts.Add(spawnPoint.GetComponent<EnemySpawnPointScript>());
 
