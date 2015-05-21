@@ -29,6 +29,24 @@ public class EnemyScript : MonoBehaviour {
 		UpdateTarget();
 	}
 
+	public void Attacked(int damage) {
+		hitPoints -= damage;
+		if (hitPoints <= 0) {
+			OnDeath();
+		}
+	}
+
+	public void SetSpawnPoint(EnemySpawnPointScript spawnPoint) {
+		originSpawnPoint = spawnPoint;
+	}
+
+	protected void OnDeath() {
+		if (originSpawnPoint) {
+			originSpawnPoint.SpawnedEnemyDefeated();
+		}
+		Destroy(this.gameObject);
+	}
+
 	protected void MoveDirectlyTowardsTarget() {
 		if (target != null) {
 			Vector2 direction = target.transform.position - this.transform.position;

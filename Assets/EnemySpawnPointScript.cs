@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class EnemySpawnPointScript : MonoBehaviour {
-
-	public int enemyCountToSpawn;
+	
 	public List<GameObject> enemyTypes;
 	public float spawnDelay;
-	public bool done;
-	public int enemiesDefeated;
-	int level;
+	public int enemiesLeft;
 
+	public int level;
+	public int enemyCountToSpawn;
+	public int enemiesDefeated;
 	private float nextSpawnTime;
 
 	// Use this for initialization
@@ -32,6 +32,8 @@ public class EnemySpawnPointScript : MonoBehaviour {
 	public void StartLevel() {
 		SetSpawnPointParams();
 		nextSpawnTime = Time.time + spawnDelay;
+		enemiesDefeated = 0;
+		enemiesLeft = enemyCountToSpawn;
 	}
 
 	public void SetSpawnPointParams() {
@@ -45,15 +47,20 @@ public class EnemySpawnPointScript : MonoBehaviour {
 
 		} else if (level < 6) {
 			spawnDelay = 4.0f;
+			enemyCountToSpawn = 3;
 
 		} else if (level < 9) {
 			spawnDelay = 3.0f;
+			enemyCountToSpawn = 3;
 		} else if (level < 12) {
 			spawnDelay = 2.0f;
+			enemyCountToSpawn = 3;
 		} else if (level < 15) {
 			spawnDelay = 1.0f;
+			enemyCountToSpawn = 3;
 		} else {
 			spawnDelay = 0.0f;
+			enemyCountToSpawn = 3;
 		}
 	}
 
@@ -62,7 +69,19 @@ public class EnemySpawnPointScript : MonoBehaviour {
 			int index = Random.Range(0, enemyTypes.Count);
 			GameObject newEnemy =  (GameObject) Object.Instantiate(enemyTypes[index]);
 			newEnemy.transform.position = this.transform.position;
+			newEnemy.GetComponent<EnemyScript>().SetSpawnPoint(this);
 		}
 	}
 
+	public void SpawnedEnemyDefeated() {
+		enemiesLeft--;
+	}
+
+	public bool done {
+		get {return enemiesLeft <= 0;}
+	}
+
+	public void incrementLevel() {
+		level++;
+	}
 }

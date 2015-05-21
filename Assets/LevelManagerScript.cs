@@ -6,9 +6,14 @@ public class LevelManagerScript : MonoBehaviour {
 
 	public GameObject enemySpawnPoint;
 	public List<GameObject> spawnPoints;
+	public List<EnemySpawnPointScript> spawnPointScripts;
+	public float levelCooldown = 5.0f;
+
+	private bool inCooldown = false;
 
 	void Awake() {
 		spawnPoints = new List<GameObject>();
+		spawnPointScripts = new List<EnemySpawnPointScript>();
 	}
 
 	// Use this for initialization
@@ -19,7 +24,9 @@ public class LevelManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (!inCooldown && IsLevelComplete()) {
+			StartCoroutine(Cooldown(levelCooldown));
+		}
 	}
 
 	void CreateSpawnPoints() {
@@ -30,8 +37,16 @@ public class LevelManagerScript : MonoBehaviour {
 			GameObject spawnPoint = Object.Instantiate(enemySpawnPoint);
 			spawnPoint.transform.position = new Vector3(Random.Range(0, mapWidth), Random.Range(0, mapHeight), 0);
 			spawnPoints.Add(spawnPoint);
+			spawnPointScripts.Add(spawnPoint.GetComponent<EnemySpawnPointScript>());
 
 		}
+	}
+
+	private IEnumerator Cooldown(float seconds) {
+		inCooldown = true;
+		yield return new WaitForSeconds(seconds);
+		StartNextLevel();
+		inCooldown = false;
 	}
 
 	private void StartLevel() {
@@ -41,4 +56,24 @@ public class LevelManagerScript : MonoBehaviour {
 		}
 	}
 
+	private void StartNextLevel() {
+		IncrementLevel();
+		foreach (GameObject spawnPoint in spawnPoints) {
+			spawnPoint.GetComponent<EnemySpawnPointScript>().StartLevel();
+		}
+	}
+
+	private void IncrementLevel() {
+		foreach (EnemySpawnPointScript spawnPoint in spawnPointScripts) {
+			spawnPoint.incrementLevel();
+		}
+	}
+
+	private bool IsLevelComplete() {
+		bool isComplete = true;
+		foreach (EnemySpawnPointScript spawnPoint in spawnPointScripts) {
+			isComplete &= spawnPoint.done;
+		}
+		return isComplete;
+	}
 }
