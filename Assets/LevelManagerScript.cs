@@ -29,7 +29,7 @@ public class LevelManagerScript : MonoBehaviour {
 		}
 	}
 
-	void CreateSpawnPoints() {
+	private void CreateSpawnPoints() {
 		int level = GameManagerScript.gameManager.level;
 		int mapWidth = GameManagerScript.gameManager.mapWidth;
 		int mapHeight = GameManagerScript.gameManager.mapHeight;
@@ -40,6 +40,19 @@ public class LevelManagerScript : MonoBehaviour {
 			spawnPointScripts.Add(spawnPoint.GetComponent<EnemySpawnPointScript>());
 
 		}
+	}
+
+	private void AddSpawnPoint(int level) {
+		int mapWidth = GameManagerScript.gameManager.mapWidth;
+		int mapHeight = GameManagerScript.gameManager.mapHeight;
+
+		GameObject spawnPoint = Object.Instantiate(enemySpawnPoint);
+		EnemySpawnPointScript spawnPointScript = spawnPoint.GetComponent<EnemySpawnPointScript>();
+		spawnPoint.transform.position = new Vector3(Random.Range(1, mapWidth-2), Random.Range(1, mapHeight-2), 0);
+		spawnPointScript.SetLevel(level);
+
+		spawnPoints.Add(spawnPoint);
+		spawnPointScripts.Add(spawnPointScript);
 	}
 
 	private IEnumerator Cooldown(float seconds) {
@@ -64,8 +77,11 @@ public class LevelManagerScript : MonoBehaviour {
 	}
 
 	private void IncrementLevel() {
+		GameManagerScript.gameManager.level++;
+		AddSpawnPoint(GameManagerScript.gameManager.level);
+
 		foreach (EnemySpawnPointScript spawnPoint in spawnPointScripts) {
-			spawnPoint.incrementLevel();
+			spawnPoint.IncrementLevel();
 		}
 	}
 

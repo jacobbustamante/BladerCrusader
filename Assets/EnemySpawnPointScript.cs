@@ -41,6 +41,8 @@ public class EnemySpawnPointScript : MonoBehaviour {
 		if (level < 3) {
 			spawnDelay = 5.0f;
 			enemyCountToSpawn = 3;
+
+			enemyTypes.Clear();
 			enemyTypes.Add(EnemyPool.enemyPool.Org);
 			enemyTypes.Add(EnemyPool.enemyPool.Specty);
 			enemyTypes.Add(EnemyPool.enemyPool.Snell);
@@ -49,18 +51,43 @@ public class EnemySpawnPointScript : MonoBehaviour {
 			spawnDelay = 4.0f;
 			enemyCountToSpawn = 3;
 
+			enemyTypes.Clear();
+			enemyTypes.Add(EnemyPool.enemyPool.Org);
+			enemyTypes.Add(EnemyPool.enemyPool.Specty);
+			enemyTypes.Add(EnemyPool.enemyPool.Snell);
+
 		} else if (level < 9) {
 			spawnDelay = 3.0f;
 			enemyCountToSpawn = 3;
+
+			enemyTypes.Clear();
+			enemyTypes.Add(EnemyPool.enemyPool.Org);
+			enemyTypes.Add(EnemyPool.enemyPool.Specty);
+			enemyTypes.Add(EnemyPool.enemyPool.Snell);
 		} else if (level < 12) {
 			spawnDelay = 2.0f;
 			enemyCountToSpawn = 3;
+
+			enemyTypes.Clear();
+			enemyTypes.Add(EnemyPool.enemyPool.Org);
+			enemyTypes.Add(EnemyPool.enemyPool.Specty);
+			enemyTypes.Add(EnemyPool.enemyPool.Snell);
 		} else if (level < 15) {
 			spawnDelay = 1.0f;
 			enemyCountToSpawn = 3;
+
+			enemyTypes.Clear();
+			enemyTypes.Add(EnemyPool.enemyPool.Org);
+			enemyTypes.Add(EnemyPool.enemyPool.Specty);
+			enemyTypes.Add(EnemyPool.enemyPool.Snell);
 		} else {
 			spawnDelay = 0.0f;
 			enemyCountToSpawn = 3;
+
+			enemyTypes.Clear();
+			enemyTypes.Add(EnemyPool.enemyPool.Org);
+			enemyTypes.Add(EnemyPool.enemyPool.Specty);
+			enemyTypes.Add(EnemyPool.enemyPool.Snell);
 		}
 	}
 
@@ -81,7 +108,11 @@ public class EnemySpawnPointScript : MonoBehaviour {
 		get {return enemiesLeft <= 0;}
 	}
 
-	public void incrementLevel() {
+	public void IncrementLevel() {
 		level++;
+	}
+
+	public void SetLevel(int level) {
+		this.level = level;
 	}
 }

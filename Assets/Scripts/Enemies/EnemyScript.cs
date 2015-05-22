@@ -14,6 +14,10 @@ public class EnemyScript : MonoBehaviour {
 	protected EnemySpawnPointScript originSpawnPoint;
 	protected Rigidbody2D rb;
 	protected GameObject target;
+	protected string targetTag = "Player";
+
+	protected const float attackTimeout = 2.0f;
+	protected float attackTimer = 0;
 
 	protected virtual void Awake() {
 		rb = this.GetComponent<Rigidbody2D>();
@@ -58,5 +62,17 @@ public class EnemyScript : MonoBehaviour {
 		if (target == null)
 			target = GameManagerScript.gameManager.GetPlayerInstance();
 	}
+	
+	private void HitPlayer() {
+		// hurt player
+		attackTimer = Time.time + attackTimeout;
+	}
 
+	// Collissions
+	void OnCollisionEnter2D(Collision2D coll)
+	{
+		if (coll.gameObject.CompareTag("Player")) {
+			HitPlayer();
+		}
+	}
 }
