@@ -8,6 +8,8 @@ public class HeroScript : MonoBehaviour {
 	public int baseAttack = 1;
 	public int baseDefense = 1;
 	public int baseSpeed = 1;
+	public int[] maxActiveAttacks;
+	public int[] curActiveAttacks;
 
 	public List<GameObject> attacks;
 
@@ -21,11 +23,27 @@ public class HeroScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
+		curActiveAttacks[0] = 0;
+		curActiveAttacks[1] = 0;
+		curActiveAttacks[2] = 0;
+		maxActiveAttacks[0] = 2;
+		maxActiveAttacks[1] = 1;
+		maxActiveAttacks[2] = 4;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetButtonDown ("Weapon1")) { //Sword, "1"
+			curAttack = 0;
+		}
+		if (Input.GetButtonDown ("Weapon2")) { //Axe, "2"
+			curAttack = 1;
+		}
+		if (Input.GetButtonDown ("Weapon3")) { //Dagger, "3"
+			curAttack = 2;
+		}
+
 	}
 
 	// Update is called once per physics frame
@@ -33,7 +51,11 @@ public class HeroScript : MonoBehaviour {
 		rb.velocity = new Vector2 (Input.GetAxisRaw ("Horizontal") * baseSpeed, Input.GetAxisRaw ("Vertical") * baseSpeed);
 
 		if (Input.GetButtonDown("Fire1")) {
-			FireProjectile();
+			Debug.Log("curActiveAttacks[" + curAttack+ "]: " + curActiveAttacks[curAttack]);
+			if(curActiveAttacks[curAttack] < maxActiveAttacks[curAttack]){
+				curActiveAttacks[curAttack]++;
+				FireProjectile();
+			}
 		}
 
 		// Test build code for Fallessi install
@@ -46,10 +68,19 @@ public class HeroScript : MonoBehaviour {
 		ProjectileScript projScript = projectile.GetComponent<ProjectileScript>();
 		projScript.SetTargetLocation(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 		projScript.SetTargetTag("Enemy");
+		projScript.SetWeaponType(curAttack);
+		projScript.SetOriginator (this);
+
 	}
 
 	private Vector2 GetMousePos() {
 		Vector3 worldLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		return new Vector2(worldLocation.x, worldLocation.y);
 	}
+
+	public void DecreaseActiveAttacks(int type){
+		curActiveAttacks[type]--;
+	}
+
+
 }
