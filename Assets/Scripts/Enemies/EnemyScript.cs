@@ -17,6 +17,7 @@ public class EnemyScript : MonoBehaviour {
 	protected string targetTag = "Player";
 
 	protected const float attackTimeout = 2.0f;
+	protected const float hitTimeout = 0.5f;
 	protected float attackTimer = 0;
 
 	protected virtual void Awake() {
@@ -68,11 +69,27 @@ public class EnemyScript : MonoBehaviour {
 		attackTimer = Time.time + attackTimeout;
 	}
 
+	private void HitByProjectile() {
+		attackTimer = Time.time + hitTimeout;
+	}
+
 	// Collissions
 	void OnCollisionEnter2D(Collision2D coll)
 	{
 		if (coll.gameObject.CompareTag("Player")) {
 			HitPlayer();
+		}
+
+	}
+
+	void OnTriggerEnter2D(Collider2D coll) {
+		if (coll.gameObject.CompareTag("Projectile")) {
+			//This doesn't seem to work :/ ...
+			rb.AddForce(10*(this.transform.position - coll.gameObject.transform.position));
+			Debug.Log("push");
+			if (Time.time > attackTimer) {
+				HitByProjectile();
+			}
 		}
 	}
 }

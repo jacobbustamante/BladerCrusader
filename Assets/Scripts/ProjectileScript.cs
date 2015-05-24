@@ -1,9 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(BoxCollider2D))]
+//For bomb, it uses a circle collider
+//[RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class ProjectileScript : MonoBehaviour {
+
+	const int SWORD = 0;
+	const int AXE = 1;
+	const int DAGGER = 2;
+	const int BOLT = 3;
+	const int BOMB = 4;
+	const int SPIKE = 5;
 
 	public float speed = 1.0f;
 	public int damage = 1;
@@ -14,27 +22,34 @@ public class ProjectileScript : MonoBehaviour {
 	private int weaponType;
 	public int numberOfHits;
 	private HeroScript originator;
+	private Animator anim;
+	private Renderer rend;
 
 
 	void Awake() {
 		rb = this.GetComponent<Rigidbody2D>();
+		rend = this.GetComponent<Renderer> ();
 	}
 
 	// Use this for initialization
 	void Start () {
-		
+		anim = this.GetComponent<Animator> ();
+		if (weaponType == SPIKE) {
+			anim.SetInteger("Color", Random.Range(0, 2));
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (weaponType == 1) {
+		if (weaponType == AXE) {
 			rb.rotation += 5;
+		} else if (weaponType == SPIKE) {
+			this.transform.rotation = Quaternion.identity;
 		}
-		if (numberOfHits <= 0) {
-			Destroy (gameObject, 0);
-		} else {
-
-		}
+//		if (numberOfHits <= 0) {
+//			Destroy (gameObject, 0);
+//			originator.DecreaseActiveAttacks(weaponType);
+//		}
 	}
 
 	public void SetWeaponType(int type){
@@ -75,6 +90,9 @@ public class ProjectileScript : MonoBehaviour {
 		if (coll.gameObject.CompareTag("Wall")) {
 			numberOfHits = 0;
 			if (numberOfHits <= 0) {
+				if(weaponType == BOMB) {
+					//Instantiate explosion
+				}
 				Destroy(gameObject, 0);
 				originator.DecreaseActiveAttacks(weaponType);
 				
@@ -98,6 +116,9 @@ public class ProjectileScript : MonoBehaviour {
 			EnemyScript enemy = coll.gameObject.GetComponent<EnemyScript>();
 			numberOfHits--;
 			if (numberOfHits <= 0) {
+				if(weaponType == BOMB) {
+					//Instantiate explosion
+				}
 				Destroy(gameObject, 0);
 				originator.DecreaseActiveAttacks(weaponType);
 
@@ -121,6 +142,11 @@ public class ProjectileScript : MonoBehaviour {
 //			
 //			Destroy(this.gameObject);
 //		}
+	}
+
+	void OnBecameInvisible() {
+		Destroy(gameObject, 0);
+		originator.DecreaseActiveAttacks(weaponType);
 	}
 
 }
