@@ -86,7 +86,7 @@ public class EnemyScript : MonoBehaviour {
 		if (coll.gameObject.CompareTag("Projectile")) {
 			//This doesn't seem to work :/ ...
 			rb.AddForce(10*(this.transform.position - coll.gameObject.transform.position));
-			Debug.Log("push");
+			//Debug.Log("push");
 			if (Time.time > attackTimer) {
 				HitByProjectile();
 			}

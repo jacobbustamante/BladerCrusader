@@ -63,8 +63,24 @@ public class ProjectileScript : MonoBehaviour {
 	public void SetTargetLocation(Vector3 location) {
 		Vector2 direction = location - this.transform.position;
 		rb.velocity = direction.normalized * speed;
-		rb.rotation += Vector3.Angle (new Vector3(0, 1, 0), location);
-		//Debug.Log ("rot: " + rb.rotation);
+		if(location.x > this.transform.position.x) {
+			rb.rotation -= Vector3.Angle (new Vector3(0, 1, 0), direction.normalized);
+		} else {
+			rb.rotation += Vector3.Angle (new Vector3(0, 1, 0), direction.normalized);
+		}
+		Debug.Log ("rot: " + rb.rotation);
+	}
+
+	public void SetTargetLocationAtAngle(Vector3 location, float angle) {
+		Vector2 direction = location - this.transform.position;
+		Vector2 newDirection = RotateVector(direction, angle);
+		rb.velocity = newDirection.normalized * speed;
+		if(newDirection.x > 0) {
+			rb.rotation -= Vector3.Angle (new Vector3(0, 1, 0), newDirection.normalized);
+		} else {
+			rb.rotation += Vector3.Angle (new Vector3(0, 1, 0), newDirection.normalized);
+		}
+		Debug.Log ("rot: " + rb.rotation);
 	}
 
 	public void SetOriginator(HeroScript orig){
@@ -149,4 +165,12 @@ public class ProjectileScript : MonoBehaviour {
 		originator.DecreaseActiveAttacks(weaponType);
 	}
 
+	private Vector2 RotateVector(Vector2 v, float degrees) {
+		float sin = Mathf.Sin(degrees * Mathf.Deg2Rad);
+		float cos = Mathf.Cos(degrees * Mathf.Deg2Rad);
+		float tx = v.x;
+		float ty = v.y;
+		
+		return new Vector2((cos * tx) - (sin * ty), (sin * tx) + (cos * ty));
+	}
 }

@@ -38,7 +38,7 @@ public class HeroScript : MonoBehaviour {
 		curActiveAttacks[BOMB] = 0;
 		curActiveAttacks[SPIKE] = 0;
 		maxActiveAttacks[SWORD] = 2;
-		maxActiveAttacks[AXE] = 1;
+		maxActiveAttacks[AXE] = 1000;
 		maxActiveAttacks[DAGGER] = 4;
 		maxActiveAttacks[BOLT] = 8;
 		maxActiveAttacks[BOMB] = 2;
@@ -74,7 +74,7 @@ public class HeroScript : MonoBehaviour {
 		rb.velocity = new Vector2 (Input.GetAxisRaw ("Horizontal") * baseSpeed, Input.GetAxisRaw ("Vertical") * baseSpeed);
 
 		if (Input.GetButtonDown("Fire1")) {
-			Debug.Log("curActiveAttacks[" + curAttack+ "]: " + curActiveAttacks[curAttack]);
+			//Debug.Log("curActiveAttacks[" + curAttack+ "]: " + curActiveAttacks[curAttack]);
 			if(curActiveAttacks[curAttack] < maxActiveAttacks[curAttack]){
 				curActiveAttacks[curAttack]++;
 				FireProjectile();
@@ -91,7 +91,8 @@ public class HeroScript : MonoBehaviour {
 		projectile.transform.position = this.transform.position;
 		ProjectileScript projScript = projectile.GetComponent<ProjectileScript>();
 		if (curAttack == BOLT) {
-			projScript.SetTargetLocation (Vector3.RotateTowards(projectile.transform.position, target, 30.0f, 0.0f));
+			//projScript.SetTargetLocation (Vector3.RotateTowards(projectile.transform.position, target, 30.0f, 0.0f));
+			projScript.SetTargetLocationAtAngle(target, 30.0f);
 		} else {
 			projScript.SetTargetLocation (target);
 		}
@@ -102,7 +103,8 @@ public class HeroScript : MonoBehaviour {
 			GameObject projectile2 = Object.Instantiate(attacks[curAttack]);
 			projectile2.transform.position = this.transform.position;
 			ProjectileScript projScript2 = projectile2.GetComponent<ProjectileScript>();
-			projScript2.SetTargetLocation(Vector3.RotateTowards(projectile2.transform.position, target, -30.0f, 0.0f));
+			//projScript2.SetTargetLocation(Vector3.RotateTowards(projectile2.transform.position, target, -30.0f, 0.0f));
+			projScript2.SetTargetLocationAtAngle(target, -30.0f);
 			projScript2.SetTargetTag("Enemy");
 			projScript2.SetWeaponType(curAttack);
 			projScript2.SetOriginator (this);
