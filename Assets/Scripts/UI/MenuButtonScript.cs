@@ -18,4 +18,5 @@ public class MenuButtonScript : MonoBehaviour {
 	public void CloseMenu() {
 		Destroy(objectToClose);
 	}
+
 }
