@@ -27,7 +27,7 @@ public class GameManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		Time.timeScale = 1;
 	}
 	
 	// Update is called once per frame
@@ -50,6 +50,14 @@ public class GameManagerScript : MonoBehaviour {
 	public void StartLevel() {
 		PlaceHero();
 		playerInstance.SetActive(true);
+
+	}
+
+	public void EndLevel() {
+
+	}
+
+	public void EndGame() {
 
 	}
 

@@ -15,7 +15,6 @@ public class EnemyPool : MonoBehaviour {
 
 	void Awake() {
 		if (enemyPool == null) {
-			DontDestroyOnLoad(this.gameObject);
 			enemyPool = this;
 		} else if (enemyPool != this) {
 			Destroy (this.gameObject);

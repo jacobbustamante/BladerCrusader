@@ -20,7 +20,7 @@ public class PersistenceScript : MonoBehaviour {
 			Debug.Log("Loaded from " + filePath);
 		}
 		else {
-			Debug.Log("ERROR: " + filePath + " not found.");
+			Debug.Log("" + filePath + " not found.");
 		}
 		
 		return data;

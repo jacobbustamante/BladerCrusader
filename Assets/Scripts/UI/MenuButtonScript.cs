@@ -8,7 +8,10 @@ public class MenuButtonScript : MonoBehaviour {
 
 	public void OpenMenu() {
 		GameObject menu = Object.Instantiate(objectToOpen);
-		menu.transform.SetParent(transform.parent);
+		Transform newParent = transform.parent;
+		while (newParent.parent)
+			newParent = newParent.parent;
+		menu.transform.SetParent(newParent);
 
 		RectTransform rt = menu.GetComponent<RectTransform>();
 		rt.offsetMin = Vector2.zero;
@@ -19,4 +22,7 @@ public class MenuButtonScript : MonoBehaviour {
 		Destroy(objectToClose);
 	}
 
+	public void ClosePauseMenu() {
+		PauseMenuScript.pauseMenu.ClosePauseMenu();
+	}
 }

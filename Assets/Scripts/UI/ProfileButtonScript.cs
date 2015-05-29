@@ -31,17 +31,21 @@ public class ProfileButtonScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (LoadProfileInfo()) {
-
-		}
-		else {
-			InitializeEmptyProfileInfo();
-		}
+		UpdateStatus();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void UpdateStatus() {
+		if (LoadProfileInfo()) {
+			
+		}
+		else {
+			InitializeEmptyProfileInfo();
+		}
 	}
 
 	private void InitializeEmptyProfileInfo() {
@@ -53,9 +57,9 @@ public class ProfileButtonScript : MonoBehaviour {
 
 	private void InitializeProfileInfo() {
 		profileName.text = profile.profileName;
-		playerInfo.text = "Lv." + profile.playerLevel + " " + "Blader";
-		sceneName.text = "Lv." + profile.curLevel + " " + profile.curSceneName;
-		timePlayedInfo.text = "TimePlayed: " + Mathf.RoundToInt(profile.totalTimePlayed);
+		playerInfo.text = "Level: " + profile.playerLevel;
+		sceneName.text = "Wave: " + profile.curLevel;
+		timePlayedInfo.text = "Score: " + Mathf.RoundToInt(profile.totalTimePlayed);
 	}
 
 	private bool LoadProfileInfo() {
@@ -68,6 +72,7 @@ public class ProfileButtonScript : MonoBehaviour {
 			return true;
 		}
 		else {
+			profile = null;
 			return false;
 		}
 	}

@@ -2,39 +2,43 @@
 using System.Collections;
 
 public class PauseMenuScript : MonoBehaviour {
-	bool showGUI = false;
+
+	public GameObject pauseScreenPrefab;
+	public GameObject parentCanvas;
+	public static PauseMenuScript pauseMenu;
+
+	private bool inPause = false;
+	private GameObject curPauseInstance;
+
+	void Awake() {
+		if (pauseMenu == null) {
+			pauseMenu = this;
+		} else if (pauseMenu != this) {
+			Destroy (this.gameObject);
+		} 
+	}
 
 	void Update () {
-		if(Input.GetKey(KeyCode.Escape))
-		{
-			showGUI=true;
+		if (Input.GetButtonDown("Pause") && !inPause) {
 			Time.timeScale = 0;
+			inPause = true;
+			OpenPauseMenu();
 		}
+	}
+
+	private void OpenPauseMenu() {
+		curPauseInstance = Object.Instantiate(pauseScreenPrefab);
+		curPauseInstance.transform.SetParent(parentCanvas.transform);
 		
+		RectTransform rt = curPauseInstance.GetComponent<RectTransform>();
+		rt.offsetMin = Vector2.zero;
+		rt.offsetMax = Vector2.zero;
 	}
-	
-	void OnGUI()
-	{
-		if(showGUI)
-		{
-			GUI.Box(new Rect(Screen.width/2-150,Screen.height/2-150,300,500),"");
-			if(GUI.Button(new Rect(Screen.width/2-50,Screen.height/2-100,100,50),"Continue"))
-			{
-				showGUI=false;
-				Time.timeScale = 1;
-			}
-			if(GUI.Button(new Rect(Screen.width/2-50,Screen.height/2,100,50),"Settings"))
-			{
-				showGUI=false;
-				GUI.Box(new Rect(Screen.width/2-150,Screen.height/2-150,300,500),"");
 
-			}
-			if(GUI.Button(new Rect(Screen.width/2-50,Screen.height/2+100,100,50),"Quit"))
-			{
-				showGUI=false;
-				Application.LoadLevel("Menu");
-			}
-
-		}
+	public void ClosePauseMenu() {
+		inPause = false;
+		Destroy(curPauseInstance);
+		Time.timeScale = 1;
 	}
+
 }
