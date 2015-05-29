@@ -10,6 +10,7 @@ public class ProfileButtonScript : MonoBehaviour {
 	public GameObject newProfilePrefab;
 
 	public string profileFileName;
+	public bool getCurProfileName = false;
 	public GameObject profileNameObject;
 	public GameObject playerInfoObject;
 	public GameObject sceneNameObject;
@@ -27,12 +28,15 @@ public class ProfileButtonScript : MonoBehaviour {
 		playerInfo = playerInfoObject.GetComponent<Text>();
 		sceneName = sceneNameObject.GetComponent<Text>();
 		timePlayedInfo = timePlayedInfoObject.GetComponent<Text>();
-
-		filePath = saveFileName + profileFileName + saveFileExt;
 	}
 
 	// Use this for initialization
 	void Start () {
+		if (getCurProfileName) {
+			profileFileName = GameManagerScript.gameManager.GetProfile().profileName;
+		}
+		filePath = saveFileName + profileFileName + saveFileExt;
+
 		UpdateStatus();
 	}
 	
