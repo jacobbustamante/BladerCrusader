@@ -12,6 +12,7 @@ public class ProfileDataScript {
 
 	// meta
 	public float totalTimePlayed;
+	public string username;
 
 	// character
 	public int playerLevel;
@@ -22,6 +23,7 @@ public class ProfileDataScript {
 
 	public ProfileDataScript() {
 		profileName = "0";
+		username = "0";
 		
 		totalTimePlayed = 0;
 		playerLevel = 1;
@@ -30,8 +32,9 @@ public class ProfileDataScript {
 		curLevel = 1;
 	}
 
-	public ProfileDataScript(string name) {
+	public ProfileDataScript(string name, string username) {
 		profileName = name;
+		this.username = username;
 
 		totalTimePlayed = 0;
 		playerLevel = 1;

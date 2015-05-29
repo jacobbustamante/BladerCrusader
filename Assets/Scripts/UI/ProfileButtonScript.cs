@@ -7,6 +7,8 @@ public class ProfileButtonScript : MonoBehaviour {
 	private const string saveFileName = "/profile-";
 	private const string saveFileExt = ".dat";
 
+	public GameObject newProfilePrefab;
+
 	public string profileFileName;
 	public GameObject profileNameObject;
 	public GameObject playerInfoObject;
@@ -56,7 +58,7 @@ public class ProfileButtonScript : MonoBehaviour {
 	}
 
 	private void InitializeProfileInfo() {
-		profileName.text = profile.profileName;
+		profileName.text = profile.username;
 		playerInfo.text = "Level: " + profile.playerLevel;
 		sceneName.text = "Wave: " + profile.curLevel;
 		timePlayedInfo.text = "Score: " + Mathf.RoundToInt(profile.totalTimePlayed);
@@ -81,8 +83,12 @@ public class ProfileButtonScript : MonoBehaviour {
 		if (profile != null)
 			this.GetComponent<LoadGameScript>().LoadGameFromProfile(profile);
 		else {
-			profile = new ProfileDataScript(profileFileName);
-			this.GetComponent<LoadGameScript>().LoadGameFromProfile(profile);
+			GameObject newProfileObject = MenuButtonScript.OpenMenu(newProfilePrefab, this.transform);
+			NewProfileScript newProfile = newProfileObject.GetComponent<NewProfileScript>();
+			newProfile.SetFileName(profileFileName);
+
+			//profile = new ProfileDataScript(profileFileName, "John");
+			//this.GetComponent<LoadGameScript>().LoadGameFromProfile(profile);
 		}
 	}
 }

@@ -68,7 +68,7 @@ public class ProjectileScript : MonoBehaviour {
 		} else {
 			rb.rotation += Vector3.Angle (new Vector3(0, 1, 0), direction.normalized);
 		}
-		Debug.Log ("rot: " + rb.rotation);
+		//Debug.Log ("rot: " + rb.rotation);
 	}
 
 	public void SetTargetLocationAtAngle(Vector3 location, float angle) {
@@ -80,7 +80,7 @@ public class ProjectileScript : MonoBehaviour {
 		} else {
 			rb.rotation += Vector3.Angle (new Vector3(0, 1, 0), newDirection.normalized);
 		}
-		Debug.Log ("rot: " + rb.rotation);
+		//Debug.Log ("rot: " + rb.rotation);
 	}
 
 	public void SetOriginator(HeroScript orig){
