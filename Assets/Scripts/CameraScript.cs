@@ -15,7 +15,7 @@ public class CameraScript : MonoBehaviour
 	private int prevScreenWidth = -1, prevScreenHeight = -1;
 	
 	void Awake() {
-		gameManager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+		gameManager = GameManagerScript.gameManager;
 		cam = this.GetComponent<Camera>();
 	}
 

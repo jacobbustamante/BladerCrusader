@@ -5,9 +5,10 @@ public class GameManagerScript : MonoBehaviour {
 
 	public GameObject heroPrefab;
 	public int mapWidth, mapHeight;
-
-	private GameObject playerInstance;
+	
 	public static GameManagerScript gameManager;
+	private GameObject playerInstance;
+	private ProfileDataScript profile;
 
 	public int level = 4; 
 
@@ -20,7 +21,8 @@ public class GameManagerScript : MonoBehaviour {
 			Destroy (this.gameObject);
 		} 
 
-
+		if (profile == null)
+			profile = new ProfileDataScript();
 	}
 
 	// Use this for initialization
@@ -49,8 +51,19 @@ public class GameManagerScript : MonoBehaviour {
 		PlaceHero();
 		playerInstance.SetActive(true);
 
-
-
 	}
+
+	public void LoadFromProfile(ProfileDataScript loadedProfile) {
+		profile = loadedProfile;
+	}
+	
+	public void SaveToProfile() {
+		// profile.level = level
+	}
+	
+	public ProfileDataScript GetProfile() {
+		return profile;
+	}
+
 
 }

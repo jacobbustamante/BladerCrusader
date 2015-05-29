@@ -82,7 +82,7 @@ public class HeroScript : MonoBehaviour {
 		}
 
 		// Test build code for Fallessi install
-		GetComponent<SpriteRenderer>().color = new Color(rb.position.x, rb.position.y, 0.5f);
+		// GetComponent<SpriteRenderer>().color = new Color(rb.position.x, rb.position.y, 0.5f);
 	}
 
 	private void FireProjectile() {
