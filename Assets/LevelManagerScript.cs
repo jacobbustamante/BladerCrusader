@@ -10,6 +10,7 @@ public class LevelManagerScript : MonoBehaviour {
 	public float levelCooldown = 5.0f;
 
 	private bool inCooldown = false;
+	private const int pointsPerLevelMultiplier = 100;
 
 	void Awake() {
 		spawnPoints = new List<GameObject>();
@@ -70,6 +71,8 @@ public class LevelManagerScript : MonoBehaviour {
 	}
 
 	private void StartNextLevel() {
+		GameManagerScript.gameManager.AddScore(pointsPerLevelMultiplier * GameManagerScript.gameManager.level);
+
 		IncrementLevel();
 		foreach (GameObject spawnPoint in spawnPoints) {
 			spawnPoint.GetComponent<EnemySpawnPointScript>().StartLevel();

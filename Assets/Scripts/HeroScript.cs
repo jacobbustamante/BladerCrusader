@@ -12,7 +12,13 @@ public class HeroScript : MonoBehaviour {
 	const int BOMB = 4;
 	const int SPIKE = 5;
 
+	public int playerLevel = 1;
 	public int hitPoints = 10;
+	public int maxHitPoints = 10;
+	private int attack = 1;
+	private int defense = 1;
+	private int speed = 1;
+	public int baseHitPoints = 10;
 	public int baseAttack = 1;
 	public int baseDefense = 1;
 	public int baseSpeed = 1;
@@ -23,6 +29,7 @@ public class HeroScript : MonoBehaviour {
 
 	private Rigidbody2D rb;
 	private int curAttack = 0;
+
 
 	void Awake() {
 		rb = GetComponent<Rigidbody2D> ();
@@ -44,6 +51,7 @@ public class HeroScript : MonoBehaviour {
 		maxActiveAttacks[BOMB] = 2;
 		maxActiveAttacks[SPIKE] = 4;
 
+		UpdateStats();
 	}
 	
 	// Update is called once per frame
@@ -71,7 +79,7 @@ public class HeroScript : MonoBehaviour {
 
 	// Update is called once per physics frame
 	void FixedUpdate () {
-		rb.velocity = new Vector2 (Input.GetAxisRaw ("Horizontal") * baseSpeed, Input.GetAxisRaw ("Vertical") * baseSpeed);
+		rb.velocity = new Vector2 (Input.GetAxisRaw ("Horizontal") * speed, Input.GetAxisRaw ("Vertical") * speed);
 
 		if (Input.GetButtonDown("Fire1")) {
 			//Debug.Log("curActiveAttacks[" + curAttack+ "]: " + curActiveAttacks[curAttack]);
@@ -122,5 +130,14 @@ public class HeroScript : MonoBehaviour {
 		curActiveAttacks[type]--;
 	}
 
+	private void UpdateStats() {
+		maxHitPoints = baseHitPoints + (playerLevel / 4);
+		attack = baseAttack + (playerLevel / 4);
+		defense = baseDefense + (playerLevel / 4);
+		speed = baseSpeed + (playerLevel / 8);
+	}
 
+	public void SetLevel(int level) {
+		playerLevel = level;
+	}
 }

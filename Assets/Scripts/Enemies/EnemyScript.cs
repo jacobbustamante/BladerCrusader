@@ -16,6 +16,7 @@ public class EnemyScript : MonoBehaviour {
 	protected GameObject target;
 	protected string targetTag = "Player";
 
+	protected const int pointsMultiplier = 10;
 	protected const float attackTimeout = 2.0f;
 	protected const float hitTimeout = 0.5f;
 	protected float attackTimer = 0;
@@ -49,6 +50,7 @@ public class EnemyScript : MonoBehaviour {
 		if (originSpawnPoint) {
 			originSpawnPoint.SpawnedEnemyDefeated();
 		}
+		GameManagerScript.gameManager.AddScore(pointsMultiplier * level);
 		Destroy(this.gameObject);
 	}
 

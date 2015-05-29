@@ -14,12 +14,12 @@ public class ProfileButtonScript : MonoBehaviour {
 	public GameObject profileNameObject;
 	public GameObject playerInfoObject;
 	public GameObject sceneNameObject;
-	public GameObject timePlayedInfoObject;
+	public GameObject scoreInfoObject;
 
 	private Text profileName;
 	private Text playerInfo;
 	private Text sceneName;
-	private Text timePlayedInfo;
+	private Text scoreInfo;
 	private string filePath;
 	private ProfileDataScript profile;
 
@@ -27,7 +27,7 @@ public class ProfileButtonScript : MonoBehaviour {
 		profileName = profileNameObject.GetComponent<Text>();
 		playerInfo = playerInfoObject.GetComponent<Text>();
 		sceneName = sceneNameObject.GetComponent<Text>();
-		timePlayedInfo = timePlayedInfoObject.GetComponent<Text>();
+		scoreInfo = scoreInfoObject.GetComponent<Text>();
 	}
 
 	// Use this for initialization
@@ -38,11 +38,6 @@ public class ProfileButtonScript : MonoBehaviour {
 		filePath = saveFileName + profileFileName + saveFileExt;
 
 		UpdateStatus();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	public void UpdateStatus() {
@@ -58,14 +53,14 @@ public class ProfileButtonScript : MonoBehaviour {
 		profileName.text = "New Profile";
 		playerInfo.text = "";
 		sceneName.text = "";
-		timePlayedInfo.text = "";
+		scoreInfo.text = "";
 	}
 
 	private void InitializeProfileInfo() {
 		profileName.text = profile.username;
 		playerInfo.text = "Level: " + profile.playerLevel;
 		sceneName.text = "Wave: " + profile.curLevel;
-		timePlayedInfo.text = "Score: " + Mathf.RoundToInt(profile.totalTimePlayed);
+		scoreInfo.text = "Score: " + profile.score;
 	}
 
 	private bool LoadProfileInfo() {

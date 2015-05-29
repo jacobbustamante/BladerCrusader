@@ -3,15 +3,14 @@ using System.Collections;
 
 public class GameManagerScript : MonoBehaviour {
 
+	public static GameManagerScript gameManager;
 	public GameObject heroPrefab;
 	public int mapWidth, mapHeight;
-	
-	public static GameManagerScript gameManager;
+	public int level = 1;
+	public int score = 0;
+
 	private GameObject playerInstance;
 	private ProfileDataScript profile;
-
-	public int level = 4; 
-
 
 	void Awake() {
 		if (gameManager == null) {
@@ -40,6 +39,10 @@ public class GameManagerScript : MonoBehaviour {
 		hero.transform.position = new Vector3(mapWidth / 2.0f, mapHeight / 2.0f, hero.transform.position.z);
 		hero.SetActive(false);
 
+		HeroScript heroScript = hero.GetComponent<HeroScript>();
+		heroScript.SetLevel(profile.playerLevel);
+		heroScript.hitPoints = (int)(heroScript.maxHitPoints * profile.health);
+
 		playerInstance = hero;
 	}
 
@@ -63,15 +66,25 @@ public class GameManagerScript : MonoBehaviour {
 
 	public void LoadFromProfile(ProfileDataScript loadedProfile) {
 		profile = loadedProfile;
+
+		level = profile.curLevel;
+		score = profile.score;
 	}
 	
 	public void SaveToProfile() {
-		// profile.level = level
+		HeroScript hero = playerInstance.GetComponent<HeroScript>();
+
+		profile.curLevel = level;
+		profile.playerLevel = hero.playerLevel;
+		profile.score = score;
+		profile.health = (float)hero.hitPoints / hero.maxHitPoints;
 	}
 	
 	public ProfileDataScript GetProfile() {
 		return profile;
 	}
 
-
+	public void AddScore(int points) {
+		score += points;
+	}
 }
