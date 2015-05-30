@@ -15,12 +15,8 @@ public class HeroScript : MonoBehaviour {
 	public int playerLevel = 1;
 	public int hitPoints = 10;
 	public int maxHitPoints = 10;
-	private int attack = 1;
-	private int defense = 1;
 	private int speed = 1;
 	public int baseHitPoints = 10;
-	public int baseAttack = 1;
-	public int baseDefense = 1;
 	public int baseSpeed = 1;
 	public int[] maxActiveAttacks;
 	public int[] curActiveAttacks;
@@ -132,12 +128,33 @@ public class HeroScript : MonoBehaviour {
 
 	private void UpdateStats() {
 		maxHitPoints = baseHitPoints + (playerLevel / 4);
-		attack = baseAttack + (playerLevel / 4);
-		defense = baseDefense + (playerLevel / 4);
 		speed = baseSpeed + (playerLevel / 8);
 	}
 
 	public void SetLevel(int level) {
 		playerLevel = level;
+	}
+
+	public void HitByEnemy(GameObject enemy) {
+		EnemyScript enemyScript = enemy.GetComponent<EnemyScript>(); 
+
+		hitPoints = Mathf.Max(hitPoints - enemyScript.attack, 0);
+		HUDHealthScript.UpdateInfo();
+		if (hitPoints <= 0) {
+			OnDeath();
+		}
+	}
+
+	private void OnDeath() {
+
+	}
+
+	void OnCollisionEnter2D(Collision2D coll)
+	{
+		if (coll.gameObject.CompareTag("Enemy")) {
+
+			HUDHealthScript.UpdateInfo();
+		}
+		
 	}
 }

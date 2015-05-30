@@ -7,8 +7,11 @@ public class EnemyScript : MonoBehaviour {
 
 	public int level = 1;
 	public int hitPoints = 10;
+	public int maxHitPoints = 10;
+	public int attack = 1;
+	private int speed = 1;
+	public int baseHitPoints = 10;
 	public int baseAttack = 1;
-	public int baseDefense = 1;
 	public int baseSpeed = 1;
 
 	protected EnemySpawnPointScript originSpawnPoint;
@@ -27,6 +30,7 @@ public class EnemyScript : MonoBehaviour {
 
 	// Use this for initialization
 	protected virtual void Start () {
+		UpdateStats();
 		UpdateTarget();
 	}
 
@@ -46,6 +50,11 @@ public class EnemyScript : MonoBehaviour {
 		originSpawnPoint = spawnPoint;
 	}
 
+	public void SetLevel(int level) {
+		this.level = level;
+		UpdateStats();
+	}
+
 	protected void OnDeath() {
 		if (originSpawnPoint) {
 			originSpawnPoint.SpawnedEnemyDefeated();
@@ -57,7 +66,7 @@ public class EnemyScript : MonoBehaviour {
 	protected void MoveDirectlyTowardsTarget() {
 		if (target != null) {
 			Vector2 direction = target.transform.position - this.transform.position;
-			rb.velocity = direction.normalized * baseSpeed;
+			rb.velocity = direction.normalized * speed;
 		}
 	}
 	
@@ -66,20 +75,26 @@ public class EnemyScript : MonoBehaviour {
 			target = GameManagerScript.gameManager.GetPlayerInstance();
 	}
 	
-	private void HitPlayer() {
-		// hurt player
+	private void HitPlayer(GameObject player) {
 		attackTimer = Time.time + attackTimeout;
+		player.GetComponent<HeroScript>().HitByEnemy(this.gameObject);
 	}
 
 	private void HitByProjectile() {
 		attackTimer = Time.time + hitTimeout;
 	}
 
+	private void UpdateStats() {
+		maxHitPoints = baseHitPoints + (level / 4);
+		attack = baseAttack + (level / 4);
+		speed = baseSpeed + (level / 8);
+	}
+
 	// Collissions
 	void OnCollisionEnter2D(Collision2D coll)
 	{
 		if (coll.gameObject.CompareTag("Player")) {
-			HitPlayer();
+			HitPlayer(coll.gameObject);
 		}
 
 	}

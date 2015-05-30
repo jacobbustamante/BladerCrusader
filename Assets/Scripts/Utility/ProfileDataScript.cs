@@ -22,6 +22,7 @@ public class ProfileDataScript {
 	// level
 	public string curSceneName;
 	public int curLevel;
+	public int curWave;
 
 	public ProfileDataScript() {
 		profileName = "0";
@@ -34,6 +35,7 @@ public class ProfileDataScript {
 		
 		curSceneName = "Game";
 		curLevel = 1;
+		curWave = 1;
 	}
 
 	public ProfileDataScript(string name, string username) {
@@ -47,5 +49,6 @@ public class ProfileDataScript {
 
 		curSceneName = "Game";
 		curLevel = 1;
+		curWave = 1;
 	}
 }

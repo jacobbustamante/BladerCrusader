@@ -25,7 +25,7 @@ public class LevelManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!inCooldown && IsLevelComplete()) {
+		if (!inCooldown && IsWaveComplete()) {
 			StartCoroutine(Cooldown(levelCooldown));
 		}
 	}
@@ -34,7 +34,7 @@ public class LevelManagerScript : MonoBehaviour {
 		int level = GameManagerScript.gameManager.level;
 		int mapWidth = GameManagerScript.gameManager.mapWidth;
 		int mapHeight = GameManagerScript.gameManager.mapHeight;
-		for (int i = 0; i < level; i++) {
+		for (int i = 0; i < level + 2; i++) {
 			GameObject spawnPoint = Object.Instantiate(enemySpawnPoint);
 			spawnPoint.transform.position = new Vector3(Random.Range(1, mapWidth-2), Random.Range(1, mapHeight-2), 0);
 			spawnPoints.Add(spawnPoint);
@@ -50,7 +50,6 @@ public class LevelManagerScript : MonoBehaviour {
 		GameObject spawnPoint = Object.Instantiate(enemySpawnPoint);
 		EnemySpawnPointScript spawnPointScript = spawnPoint.GetComponent<EnemySpawnPointScript>();
 		spawnPoint.transform.position = new Vector3(Random.Range(1, mapWidth-2), Random.Range(1, mapHeight-2), 0);
-		spawnPointScript.SetLevel(level);
 
 		spawnPoints.Add(spawnPoint);
 		spawnPointScripts.Add(spawnPointScript);
@@ -59,36 +58,39 @@ public class LevelManagerScript : MonoBehaviour {
 	private IEnumerator Cooldown(float seconds) {
 		inCooldown = true;
 		yield return new WaitForSeconds(seconds);
-		StartNextLevel();
+		StartNextWave();
 		inCooldown = false;
 	}
 
 	private void StartLevel() {
 		GameManagerScript.gameManager.StartLevel ();
+		SendWave();
+	}
+
+	private void SendWave() {
+		HUDInfoScript.UpdateInfo();
 		foreach (GameObject spawnPoint in spawnPoints) {
-			spawnPoint.GetComponent<EnemySpawnPointScript>().StartLevel();
+			spawnPoint.GetComponent<EnemySpawnPointScript>().StartWave();
 		}
 	}
 
-	private void StartNextLevel() {
-		GameManagerScript.gameManager.AddScore(pointsPerLevelMultiplier * GameManagerScript.gameManager.level);
-
-		IncrementLevel();
-		foreach (GameObject spawnPoint in spawnPoints) {
-			spawnPoint.GetComponent<EnemySpawnPointScript>().StartLevel();
+	private void StartNextWave() {
+		if (GameManagerScript.gameManager.wave >= GameManagerScript.MAX_WAVE) {
+			IncrementLevel();
+			GameManagerScript.gameManager.wave = GameManagerScript.STARTING_WAVE;
 		}
+		else {
+			GameManagerScript.gameManager.wave++;
+		}
+		SendWave();
 	}
 
 	private void IncrementLevel() {
 		GameManagerScript.gameManager.level++;
 		AddSpawnPoint(GameManagerScript.gameManager.level);
-
-		foreach (EnemySpawnPointScript spawnPoint in spawnPointScripts) {
-			spawnPoint.IncrementLevel();
-		}
 	}
 
-	private bool IsLevelComplete() {
+	private bool IsWaveComplete() {
 		bool isComplete = true;
 		foreach (EnemySpawnPointScript spawnPoint in spawnPointScripts) {
 			isComplete &= spawnPoint.done;

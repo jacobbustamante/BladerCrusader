@@ -2,14 +2,19 @@
 using System.Collections;
 
 public class GameManagerScript : MonoBehaviour {
+	
+	public const int MAX_WAVE = 3;
+	public const int STARTING_WAVE = 1;
 
 	public static GameManagerScript gameManager;
 	public GameObject heroPrefab;
 	public int mapWidth, mapHeight;
 	public int level = 1;
+	public int wave = 1;
 	public int score = 0;
 
 	private GameObject playerInstance;
+	private HeroScript playerInstanceScript;
 	private ProfileDataScript profile;
 
 	void Awake() {
@@ -44,16 +49,29 @@ public class GameManagerScript : MonoBehaviour {
 		heroScript.hitPoints = (int)(heroScript.maxHitPoints * profile.health);
 
 		playerInstance = hero;
+		playerInstanceScript = hero.GetComponent<HeroScript>();
 	}
 
 	public GameObject GetPlayerInstance() {
 		return playerInstance;
 	}
 
+	public int playerLevel {
+		get { return playerInstance ? playerInstanceScript.playerLevel : 1;}
+	}
+
+	public int playerHealth {
+		get { return playerInstance ? playerInstanceScript.hitPoints : 10;}
+	}
+
+	public int playerMaxHealth {
+		get { return playerInstance ? playerInstanceScript.maxHitPoints : 10;}
+	}
+
 	public void StartLevel() {
 		PlaceHero();
 		playerInstance.SetActive(true);
-
+		UpdateAllHUDS();
 	}
 
 	public void EndLevel() {
@@ -68,6 +86,7 @@ public class GameManagerScript : MonoBehaviour {
 		profile = loadedProfile;
 
 		level = profile.curLevel;
+		wave = profile.curWave;
 		score = profile.score;
 	}
 	
@@ -75,6 +94,7 @@ public class GameManagerScript : MonoBehaviour {
 		HeroScript hero = playerInstance.GetComponent<HeroScript>();
 
 		profile.curLevel = level;
+		profile.curWave = wave;
 		profile.playerLevel = hero.playerLevel;
 		profile.score = score;
 		profile.health = (float)hero.hitPoints / hero.maxHitPoints;
@@ -86,5 +106,10 @@ public class GameManagerScript : MonoBehaviour {
 
 	public void AddScore(int points) {
 		score += points;
+		HUDInfoScript.UpdateInfo();
+	}
+
+	private void UpdateAllHUDS() {
+		HUDHealthScript.UpdateInfo();
 	}
 }

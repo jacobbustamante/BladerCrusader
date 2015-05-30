@@ -58,8 +58,8 @@ public class ProfileButtonScript : MonoBehaviour {
 
 	private void InitializeProfileInfo() {
 		profileName.text = profile.username;
-		playerInfo.text = "Level: " + profile.playerLevel;
-		sceneName.text = "Wave: " + profile.curLevel;
+		playerInfo.text = "Level: " + profile.curLevel;
+		sceneName.text = "Wave: " + profile.curWave;
 		scoreInfo.text = "Score: " + profile.score;
 	}
 
