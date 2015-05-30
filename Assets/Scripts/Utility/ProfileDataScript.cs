@@ -18,6 +18,7 @@ public class ProfileDataScript {
 	// character
 	public int playerLevel;
 	public float health;
+	public int[] weaponLevels;
 
 	// level
 	public string curSceneName;
@@ -32,6 +33,7 @@ public class ProfileDataScript {
 		totalTimePlayed = 0;
 		playerLevel = 1;
 		health = 1.0f;
+		weaponLevels = null;
 		
 		curSceneName = "Game";
 		curLevel = 1;
@@ -46,6 +48,7 @@ public class ProfileDataScript {
 		totalTimePlayed = 0;
 		playerLevel = 1;
 		health = 1.0f;
+		weaponLevels = null;
 
 		curSceneName = "Game";
 		curLevel = 1;

@@ -96,7 +96,13 @@ public class EnemyScript : MonoBehaviour {
 		if (coll.gameObject.CompareTag("Player")) {
 			HitPlayer(coll.gameObject);
 		}
+	}
 
+	void OnCollisionStay2D(Collision2D collisionInfo) {
+		Debug.Log ("staying!");
+		if (collisionInfo.gameObject.CompareTag("Player")) {
+			HitPlayer(collisionInfo.gameObject);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D coll) {

@@ -13,6 +13,7 @@ public class ProjectileScript : MonoBehaviour {
 	const int BOMB = 4;
 	const int SPIKE = 5;
 
+	public int level = 1;
 	public float speed = 1.0f;
 	public int damage = 1;
 	public float attackCooldown = 0.1f;
@@ -61,24 +62,18 @@ public class ProjectileScript : MonoBehaviour {
 	}
 
 	public void SetTargetLocation(Vector3 location) {
+		SetTargetLocation(location, 0.0f);
+	}
+
+	public void SetTargetLocation(Vector3 location, float angle) {
 		Vector2 direction = location - this.transform.position;
+		if (angle != 0)
+			direction = RotateVector(direction, angle);
 		rb.velocity = direction.normalized * speed;
-		if(location.x > this.transform.position.x) {
+		if(direction.x > 0) {
 			rb.rotation -= Vector3.Angle (new Vector3(0, 1, 0), direction.normalized);
 		} else {
 			rb.rotation += Vector3.Angle (new Vector3(0, 1, 0), direction.normalized);
-		}
-		//Debug.Log ("rot: " + rb.rotation);
-	}
-
-	public void SetTargetLocationAtAngle(Vector3 location, float angle) {
-		Vector2 direction = location - this.transform.position;
-		Vector2 newDirection = RotateVector(direction, angle);
-		rb.velocity = newDirection.normalized * speed;
-		if(newDirection.x > 0) {
-			rb.rotation -= Vector3.Angle (new Vector3(0, 1, 0), newDirection.normalized);
-		} else {
-			rb.rotation += Vector3.Angle (new Vector3(0, 1, 0), newDirection.normalized);
 		}
 		//Debug.Log ("rot: " + rb.rotation);
 	}
@@ -172,5 +167,15 @@ public class ProjectileScript : MonoBehaviour {
 		float ty = v.y;
 		
 		return new Vector2((cos * tx) - (sin * ty), (sin * tx) + (cos * ty));
+	}
+
+	public void SetLevel(int level) {
+		this.level = level;
+		UpdateStats();
+	}
+
+	private void UpdateStats() {
+		speed += level;
+		damage += level;
 	}
 }
