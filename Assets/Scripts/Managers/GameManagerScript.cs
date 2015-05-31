@@ -53,7 +53,8 @@ public class GameManagerScript : MonoBehaviour {
 
 		HeroScript heroScript = hero.GetComponent<HeroScript>();
 		heroScript.SetLevels(profile.playerLevel, profile.weaponLevels);
-		heroScript.hitPoints = (int)(heroScript.maxHitPoints * profile.health);
+		heroScript.maxHitPoints = profile.maxHealth;
+		heroScript.hitPoints = profile.curHealth;
 
 		playerInstance = hero;
 		playerInstanceScript = hero.GetComponent<HeroScript>();
@@ -113,8 +114,9 @@ public class GameManagerScript : MonoBehaviour {
 		profile.curWave = wave;
 		profile.playerLevel = hero.playerLevel;
 		profile.weaponLevels = (int[])hero.weaponLevels.Clone();
+		profile.curHealth = hero.hitPoints;
+		profile.maxHealth = hero.maxHitPoints;
 		profile.score = score;
-		profile.health = (float)hero.hitPoints / hero.maxHitPoints;
 	}
 	
 	public ProfileDataScript GetProfile() {

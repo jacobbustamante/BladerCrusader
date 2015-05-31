@@ -27,8 +27,8 @@ public class HUDHealthScript : MonoBehaviour {
 		string healthTextString = curHealth.ToString() + " / " + maxHealth.ToString();
 
 		healthText.text = healthTextString;
-		healthSlider.value = curHealth;
 		healthSlider.maxValue = maxHealth;
+		healthSlider.value = curHealth;
 	}
 	
 	public static void UpdateInfo() {

@@ -200,14 +200,33 @@ public class HeroScript : MonoBehaviour {
 		}
 	}
 
+	private void RetrievePowerUp(PowerUpScript powerUp) {
+		if (powerUp.powerUpType == PowerUpScript.PowerUpType.HealthUp) {
+			maxHitPoints += powerUp.upMaxHealth;
+			hitPoints = Mathf.Min(hitPoints + powerUp.upHealth, maxHitPoints);
+			HUDHealthScript.UpdateInfo();
+		}
+		else if (powerUp.powerUpType == PowerUpScript.PowerUpType.WeaponUp) {
+			weaponLevels[curAttack] += powerUp.upWeaponLevel;
+			HUDWeaponsScript.UpdateInfo();
+		}
+		//powerUp.Retrieved();
+	}
+
 	private void OnDeath() {
 		GameManagerScript.gameManager.EndGame();
 	}
 
-	void OnCollisionEnter2D(Collision2D coll)
-	{
+	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.CompareTag("Enemy")) {
 			HUDHealthScript.UpdateInfo();
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D coll) {
+		if (coll.gameObject.CompareTag("PowerUp")) {
+			PowerUpScript powerUp = coll.gameObject.GetComponent<PowerUpScript>();
+			RetrievePowerUp(powerUp);
 		}
 	}
 

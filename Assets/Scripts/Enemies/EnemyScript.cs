@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
@@ -13,6 +14,8 @@ public class EnemyScript : MonoBehaviour {
 	public int baseHitPoints = 10;
 	public int baseAttack = 1;
 	public int baseSpeed = 1;
+	public float dropRate = 0.1f;
+	public List<GameObject> lootList;
 
 	protected EnemySpawnPointScript originSpawnPoint;
 	protected Rigidbody2D rb;
@@ -59,6 +62,7 @@ public class EnemyScript : MonoBehaviour {
 		if (originSpawnPoint) {
 			originSpawnPoint.SpawnedEnemyDefeated();
 		}
+		DropLoot();
 		GameManagerScript.gameManager.AddScore(pointsMultiplier * level);
 		Destroy(this.gameObject);
 	}
@@ -69,7 +73,15 @@ public class EnemyScript : MonoBehaviour {
 			rb.velocity = direction.normalized * speed;
 		}
 	}
-	
+
+	protected void DropLoot() {
+		float lootChance = Random.Range(0.0f, 1.0f);
+		if (lootChance <= dropRate && lootList.Count > 0) {
+			int lootDrop = Random.Range(0, lootList.Count);
+			Object.Instantiate(lootList[lootDrop], this.transform.position, Quaternion.identity);
+		}
+	}
+
 	protected void UpdateTarget() {
 		if (target == null)
 			target = GameManagerScript.gameManager.GetPlayerInstance();
