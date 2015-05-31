@@ -10,6 +10,8 @@ public class GameOverScript : MonoBehaviour {
 	private void ResetProfile() {
 		ProfileDataScript oldProfile = GameManagerScript.gameManager.GetProfile();
 		ProfileDataScript newProfile = new ProfileDataScript(oldProfile.profileName, oldProfile.username);
+		newProfile.colors = (float[])oldProfile.colors.Clone();
+		newProfile.difficulty = oldProfile.difficulty;
 
 		string fileName = ProfileDataScript.saveFileName + oldProfile.profileName + ProfileDataScript.saveFileExt;
 		PersistenceScript.SaveFile(fileName, newProfile);

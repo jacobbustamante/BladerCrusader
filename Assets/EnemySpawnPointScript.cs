@@ -27,6 +27,10 @@ public class EnemySpawnPointScript : MonoBehaviour {
 		}
 	}
 
+	private int levelAddition {
+		get { return GameManagerScript.gameManager ? GameManagerScript.gameManager.GetDifficultyAddition() : 0; }
+	}
+
 	public void StartWave() {
 		SetSpawnPointParams();
 		nextSpawnTime = Time.time + spawnDelay;
@@ -99,7 +103,7 @@ public class EnemySpawnPointScript : MonoBehaviour {
 			EnemyScript enemy = newEnemy.GetComponent<EnemyScript>();
 			newEnemy.transform.position = this.transform.position;
 			enemy.SetSpawnPoint(this);
-			enemy.SetLevel(level);
+			enemy.SetLevel(level + levelAddition);
 		}
 		else {
 			SpawnedEnemyDefeated();

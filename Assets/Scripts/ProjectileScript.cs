@@ -133,8 +133,15 @@ public class ProjectileScript : MonoBehaviour {
 				Destroy(gameObject, 0);
 				originator.DecreaseActiveAttacks(weaponType);
 
+				/* BUG: THE PROJECTILE COUNT BUG ^^
+				 * For anyone who cares (Nathan), the Destroy method waits until the end of the frame
+				 * to destroy the object. So if the projectile hits 2 enemies or more at the same time,
+				 * then DecreaseActiveAttacks will be called more than once before it is destroyed.
+				 * What you want is a boolean that signifies that the projectile is inactive and not
+				 * to run DecreaseActiveAttacks anymore (and maybe not to hit anymore). I'm deffering 
+				 * a fix for future versions though because reasons.
+				 */
 			}
-
 
 			enemy.Attacked(damage);
 		}

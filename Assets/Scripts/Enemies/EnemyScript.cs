@@ -98,6 +98,7 @@ public class EnemyScript : MonoBehaviour {
 
 	private void UpdateStats() {
 		maxHitPoints = baseHitPoints + (level / 4);
+		baseHitPoints = maxHitPoints;
 		attack = baseAttack + (level / 4);
 		speed = baseSpeed + (level / 8);
 	}

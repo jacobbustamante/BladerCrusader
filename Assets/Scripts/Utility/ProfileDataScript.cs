@@ -14,12 +14,14 @@ public class ProfileDataScript {
 	public float totalTimePlayed;
 	public string username;
 	public int score;
+	public GameManagerScript.Difficulty difficulty;
 
 	// character
 	public int playerLevel;
 	public int curHealth;
 	public int maxHealth;
 	public int[] weaponLevels;
+	public float[] colors;
 
 	// level
 	public string curSceneName;
@@ -36,6 +38,8 @@ public class ProfileDataScript {
 		curHealth = 10;
 		maxHealth = 10;
 		weaponLevels = null;
+		colors = new float[]{1,1,1};
+		difficulty = GameManagerScript.Difficulty.MEDIUM;
 		
 		curSceneName = "Game";
 		curLevel = 1;
@@ -52,6 +56,8 @@ public class ProfileDataScript {
 		curHealth = 10;
 		maxHealth = 10;
 		weaponLevels = null;
+		colors = new float[]{1,1,1};
+		difficulty = GameManagerScript.Difficulty.MEDIUM;
 
 		curSceneName = "Game";
 		curLevel = 1;

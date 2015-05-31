@@ -19,7 +19,7 @@ public class PauseMenuScript : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetButtonDown("Pause") && !inPause) {
+		if (Input.GetButtonDown("Pause") && !inPause && !GameManagerScript.gameManager.gameOver) {
 			Time.timeScale = 0;
 			inPause = true;
 			OpenPauseMenu();

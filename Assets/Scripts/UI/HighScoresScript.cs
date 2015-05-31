@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class HighScoresScript : MonoBehaviour {
 
+	private const int MAX_SCORES = 10;
+
 	public Text nameText;
 	public Text scoreText;
 	public bool insertHighScore = false;
@@ -43,7 +45,7 @@ public class HighScoresScript : MonoBehaviour {
 		List<int> tempScores = new List<int>();
 		List<string> tempNames = new List<string>();
 		int newScoreIndex = -1;
-		for (int i = 0; scoreList != null && i < scoreList.Length; i++) {
+		for (int i = 0; scoreList != null && i < scoreList.Length && i < MAX_SCORES; i++) {
 			if (newScore > scoreList[i] && newScoreIndex < 0) {
 				tempScores.Add(newScore);
 				tempNames.Add (newName);

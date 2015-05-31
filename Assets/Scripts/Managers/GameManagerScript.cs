@@ -13,11 +13,13 @@ public class GameManagerScript : MonoBehaviour {
 
 	public static GameManagerScript gameManager;
 	public GameObject gameOverPanel;
+	public GameObject gameStartPanel;
 	public GameObject heroPrefab;
 	public int mapWidth, mapHeight;
 	public int level = 1;
 	public int wave = 1;
 	public int score = 0;
+	public bool gameOver = false;
 	public Difficulty curDifficulty = Difficulty.MEDIUM;
 
 	private GameObject playerInstance;
@@ -53,6 +55,7 @@ public class GameManagerScript : MonoBehaviour {
 
 		HeroScript heroScript = hero.GetComponent<HeroScript>();
 		heroScript.SetLevels(profile.playerLevel, profile.weaponLevels);
+		heroScript.SetPSColor(profile.colors[0], profile.colors[1], profile.colors[2]);
 		heroScript.maxHitPoints = profile.maxHealth;
 		heroScript.hitPoints = profile.curHealth;
 
@@ -84,10 +87,30 @@ public class GameManagerScript : MonoBehaviour {
 		get { return playerInstance ? playerInstanceScript.weaponLevels : null;}
 	}
 
+	public int GetDifficultyAddition() {
+		switch (curDifficulty) {
+			case Difficulty.EASY:
+				return 0;
+			case Difficulty.MEDIUM:
+				return 1;
+			case Difficulty.HARD:
+				return 2;
+			default:
+				return 1;
+		}
+	}
+
 	public void StartLevel() {
 		PlaceHero();
 		playerInstance.SetActive(true);
 		UpdateAllHUDS();
+
+		Time.timeScale = 0;
+		MenuButtonScript.OpenMenu(gameStartPanel, GameObject.Find("Canvas").transform.GetChild(0).transform);
+	}
+
+	public void UnpauseGame() {
+		Time.timeScale = 1;
 	}
 
 	public void EndLevel() {
@@ -95,12 +118,14 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	public void EndGame() {
+		gameOver = true;
 		Time.timeScale = 0;
 		MenuButtonScript.OpenMenu(gameOverPanel, GameObject.Find("Canvas").transform.GetChild(0).transform);
 	}
 
 	public void LoadFromProfile(ProfileDataScript loadedProfile) {
 		profile = loadedProfile;
+		curDifficulty = profile.difficulty;
 
 		level = profile.curLevel;
 		wave = profile.curWave;
@@ -114,6 +139,8 @@ public class GameManagerScript : MonoBehaviour {
 		profile.curWave = wave;
 		profile.playerLevel = hero.playerLevel;
 		profile.weaponLevels = (int[])hero.weaponLevels.Clone();
+		profile.difficulty = curDifficulty;
+		//profile.colors = (int[])hero.weaponLevels.Clone();
 		profile.curHealth = hero.hitPoints;
 		profile.maxHealth = hero.maxHitPoints;
 		profile.score = score;
