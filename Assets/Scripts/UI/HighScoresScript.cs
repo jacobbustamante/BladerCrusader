@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 public class HighScoresScript : MonoBehaviour {
 
-	public Text text;
+	public Text nameText;
+	public Text scoreText;
 	public bool insertHighScore = false;
 
 	private int[] scoreList;
@@ -25,12 +26,14 @@ public class HighScoresScript : MonoBehaviour {
 
 	public void UpdateHighScoreText() {
 		string displayText = "";
+		string numberText = "";
 		for (int i = 0; scoreList!= null && i < scoreList.Length; i++) {
 			displayText += (i+1).ToString() + "\t";
-			displayText += nameList[i].ToString() + "\t\t\t";
-			displayText += scoreList[i].ToString() + "\n";
+			displayText += nameList[i].ToString() + "\n";
+			numberText += scoreList[i].ToString() + "\n";
 		}
-		text.text = displayText;
+		nameText.text = displayText;
+		scoreText.text = numberText;
 	}
 
 	public void InsertHighScore() {
