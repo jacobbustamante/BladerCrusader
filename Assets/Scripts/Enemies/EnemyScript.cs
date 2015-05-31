@@ -99,7 +99,6 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	void OnCollisionStay2D(Collision2D collisionInfo) {
-		Debug.Log ("staying!");
 		if (collisionInfo.gameObject.CompareTag("Player")) {
 			HitPlayer(collisionInfo.gameObject);
 		}

@@ -194,7 +194,7 @@ public class HeroScript : MonoBehaviour {
 	}
 
 	private void OnDeath() {
-
+		GameManagerScript.gameManager.EndGame();
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)

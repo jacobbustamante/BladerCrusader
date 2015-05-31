@@ -12,6 +12,7 @@ public class GameManagerScript : MonoBehaviour {
 	};
 
 	public static GameManagerScript gameManager;
+	public GameObject gameOverPanel;
 	public GameObject heroPrefab;
 	public int mapWidth, mapHeight;
 	public int level = 1;
@@ -93,7 +94,8 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	public void EndGame() {
-
+		Time.timeScale = 0;
+		MenuButtonScript.OpenMenu(gameOverPanel, GameObject.Find("Canvas").transform.GetChild(0).transform);
 	}
 
 	public void LoadFromProfile(ProfileDataScript loadedProfile) {

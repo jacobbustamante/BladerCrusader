@@ -3,7 +3,7 @@ using System.Collections;
 
 public class QuitGameScript : MonoBehaviour {
 	
-	public void QuitGame() {
+	public void QuitGameButton() {
 		if (GameManagerScript.gameManager != null) {
 			Destroy(GameManagerScript.gameManager.gameObject);
 			GameManagerScript.gameManager = null;
@@ -11,7 +11,17 @@ public class QuitGameScript : MonoBehaviour {
 
 		Time.timeScale = 1;
 	}
-	
+
+	public static void QuitGame() {
+		if (GameManagerScript.gameManager != null) {
+			Destroy(GameManagerScript.gameManager.gameObject);
+			GameManagerScript.gameManager = null;
+		}
+		
+		Time.timeScale = 1;
+	}
+
+
 	public void SaveProfile() {
 		if (GameManagerScript.gameManager != null) {
 			string profileName = GameManagerScript.gameManager.GetProfile().profileName;
