@@ -27,7 +27,7 @@ public class HighScoresScript : MonoBehaviour {
 		string displayText = "";
 		for (int i = 0; scoreList!= null && i < scoreList.Length; i++) {
 			displayText += (i+1).ToString() + "\t";
-			displayText += nameList[i].ToString() + "\t";
+			displayText += nameList[i].ToString() + "\t\t\t";
 			displayText += scoreList[i].ToString() + "\n";
 		}
 		text.text = displayText;
