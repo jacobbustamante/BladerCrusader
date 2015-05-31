@@ -37,11 +37,13 @@ public class HeroScript : MonoBehaviour {
 	private float invincibiltyTimer = 0;
 	private float knockbackTimer = 0;
 	private float knockbackDistanceMulitplier = 5;
+	private ParticleSystem ps;
 
 
 	void Awake() {
 		rb = GetComponent<Rigidbody2D> ();
 		sr = GetComponent<SpriteRenderer>();
+		ps = GetComponent<ParticleSystem> ();
 	}
 
 	// Use this for initialization
@@ -61,11 +63,13 @@ public class HeroScript : MonoBehaviour {
 		maxActiveAttacks[SPIKE] = 4;
 
 		UpdateStats();
+		ps.startColor = new Color (0f, 1f, 1.0f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// Switches weapon with q or e keydown
+
 		int nextWeapon = (int) Input.GetAxisRaw("SwitchWeapons");
 		if (nextWeapon != 0 && canSwitchWeapon) {
 			if (curAttack == 0 && nextWeapon < 0)
@@ -107,8 +111,10 @@ public class HeroScript : MonoBehaviour {
 	// Update is called once per physics frame
 	void FixedUpdate () {
 		if (Time.time > knockbackTimer) {
-			if (sr.color.a < 1 && Time.time > invincibiltyTimer - invincibiltyVisualTimeout)
+			if (sr.color.a < 1 && Time.time > invincibiltyTimer - invincibiltyVisualTimeout) {
 				sr.color = Color.white;
+				ps.Play ();
+			}
 			rb.velocity = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical")).normalized * speed;
 
 			if (Input.GetButtonDown("Fire1")) {
@@ -186,6 +192,7 @@ public class HeroScript : MonoBehaviour {
 
 			Vector3 knockback = (this.transform.position - enemy.transform.position) * knockbackDistanceMulitplier;
 			rb.velocity = knockback;
+			ps.Clear ();
 			sr.color = new Color(1,1,1,.3f);
 
 			invincibiltyTimer = Time.time + invincibiltyTimeout;
