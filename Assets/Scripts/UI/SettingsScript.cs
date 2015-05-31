@@ -8,9 +8,12 @@ public class SettingsScript : MonoBehaviour {
 	private const float DEFAULT_VOLUME = 1.0f;
 
 	public bool updateOnAwake;
+	public bool updateSettingsOnAwake = false;
 	public GameObject volumeSliderObject;
 
 	void Awake() {
+		if (updateSettingsOnAwake)
+			SetSettings();
 		if (updateOnAwake) {
 			SetSettings();
 			UpdateSettingsPanel();
