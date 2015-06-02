@@ -1,0 +1,121 @@
+fileFormatVersion: 2
+guid: 07d3552a940fc40c6a236691b667f3ee
+timeCreated: 1433032457
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: OrgSide_0
+    21300002: OrgSide_1
+    21300004: OrgSide_2
+    21300006: OrgSide_3
+    21300008: OrgSide_4
+    21300010: OrgSide_5
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 990
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: OrgSide_0
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 130
+        width: 1653
+        height: 1284
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: OrgSide_1
+      rect:
+        serializedVersion: 2
+        x: 1968
+        y: 130
+        width: 1653
+        height: 1284
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: OrgSide_2
+      rect:
+        serializedVersion: 2
+        x: 3754
+        y: 130
+        width: 1653
+        height: 1284
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: OrgSide_3
+      rect:
+        serializedVersion: 2
+        x: 5663
+        y: 130
+        width: 1653
+        height: 1284
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: OrgSide_4
+      rect:
+        serializedVersion: 2
+        x: 7619
+        y: 130
+        width: 1653
+        height: 1284
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: OrgSide_5
+      rect:
+        serializedVersion: 2
+        x: 9502
+        y: 130
+        width: 1653
+        height: 1284
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

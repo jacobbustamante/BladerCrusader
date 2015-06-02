@@ -7,6 +7,7 @@ public class EnemyOrgScript : EnemyScript {
 
 	protected override void Awake() {
 		base.Awake();
+
 	}
 
 	// Use this for initialization

@@ -23,9 +23,11 @@ public class EnemyScript : MonoBehaviour {
 	protected const float attackTimeout = 2.0f;
 	protected const float hitTimeout = 0.5f;
 	protected float attackTimer = 0;
+	Animator anim;
 
 	protected virtual void Awake() {
 		rb = this.GetComponent<Rigidbody2D>();
+		anim = GetComponent<Animator> ();
 	}
 
 	// Use this for initialization
@@ -67,6 +69,15 @@ public class EnemyScript : MonoBehaviour {
 		if (target != null) {
 			Vector2 direction = target.transform.position - this.transform.position;
 			rb.velocity = direction.normalized * speed;
+			if(rb.velocity.x > rb.velocity.y && rb.velocity.x > 0) {
+				anim.SetInteger ("Direction", 3);
+			} else if(rb.velocity.x > rb.velocity.y && rb.velocity.x < 0) {
+				anim.SetInteger ("Direction", 2);
+			} else if(rb.velocity.x < rb.velocity.y && rb.velocity.y > 0) {
+				anim.SetInteger ("Direction", 1);
+			} else {
+				anim.SetInteger ("Direction", 0);
+			}
 		}
 	}
 	
