@@ -30,11 +30,15 @@ public class LevelManagerScript : MonoBehaviour {
 		}
 	}
 
+	private int levelAddition {
+		get { return GameManagerScript.gameManager ? GameManagerScript.gameManager.GetDifficultyAddition() : 0; }
+	}
+
 	private void CreateSpawnPoints() {
 		int level = GameManagerScript.gameManager.level;
 		int mapWidth = GameManagerScript.gameManager.mapWidth;
 		int mapHeight = GameManagerScript.gameManager.mapHeight;
-		for (int i = 0; i < level + 2; i++) {
+		for (int i = 0; i < level + 2 + levelAddition; i++) {
 			GameObject spawnPoint = Object.Instantiate(enemySpawnPoint);
 			spawnPoint.transform.position = new Vector3(Random.Range(1, mapWidth-2), Random.Range(1, mapHeight-2), 0);
 			spawnPoints.Add(spawnPoint);

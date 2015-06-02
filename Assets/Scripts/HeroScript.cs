@@ -38,6 +38,7 @@ public class HeroScript : MonoBehaviour {
 	private float knockbackTimer = 0;
 	private float knockbackDistanceMulitplier = 5;
 	private ParticleSystem ps;
+	private Color newPSColor = new Color (0f, 1f, 1.0f);
 
 
 	void Awake() {
@@ -55,15 +56,15 @@ public class HeroScript : MonoBehaviour {
 		curActiveAttacks[BOLT] = 0;
 		curActiveAttacks[BOMB] = 0;
 		curActiveAttacks[SPIKE] = 0;
-		maxActiveAttacks[SWORD] = 2;
-		maxActiveAttacks[AXE] = 1000;
-		maxActiveAttacks[DAGGER] = 4;
-		maxActiveAttacks[BOLT] = 8;
+		maxActiveAttacks[SWORD] = 5;
+		maxActiveAttacks[AXE] = 3;
+		maxActiveAttacks[DAGGER] = 6;
+		maxActiveAttacks[BOLT] = 12;
 		maxActiveAttacks[BOMB] = 2;
-		maxActiveAttacks[SPIKE] = 4;
+		maxActiveAttacks[SPIKE] = 6;
 
 		UpdateStats();
-		ps.startColor = new Color (0f, 1f, 1.0f);
+		ps.startColor = newPSColor;
 	}
 	
 	// Update is called once per frame
@@ -164,7 +165,8 @@ public class HeroScript : MonoBehaviour {
 	}
 
 	public void DecreaseActiveAttacks(int type){
-		curActiveAttacks[type]--;
+		if (curActiveAttacks[type] > 0)
+			curActiveAttacks[type]--;
 	}
 
 	private void UpdateStats() {
@@ -178,6 +180,11 @@ public class HeroScript : MonoBehaviour {
 			this.weaponLevels = Enumerable.Repeat(1, attacks.Count).ToArray();
 		else
 			this.weaponLevels = (int[])weaponLevels.Clone();
+	}
+
+	public void SetPSColor(float r, float g, float b) {
+		Color newColor = new Color(r, g, b);
+		ps.startColor = newPSColor = newColor;
 	}
 
 	public void HitByEnemy(GameObject enemy) {
@@ -200,14 +207,33 @@ public class HeroScript : MonoBehaviour {
 		}
 	}
 
-	private void OnDeath() {
-
+	private void RetrievePowerUp(PowerUpScript powerUp) {
+		if (powerUp.powerUpType == PowerUpScript.PowerUpType.HealthUp) {
+			maxHitPoints += powerUp.upMaxHealth;
+			hitPoints = Mathf.Min(hitPoints + powerUp.upHealth, maxHitPoints);
+			HUDHealthScript.UpdateInfo();
+		}
+		else if (powerUp.powerUpType == PowerUpScript.PowerUpType.WeaponUp) {
+			weaponLevels[curAttack] += powerUp.upWeaponLevel;
+			HUDWeaponsScript.UpdateInfo();
+		}
+		//powerUp.Retrieved();
 	}
 
-	void OnCollisionEnter2D(Collision2D coll)
-	{
+	private void OnDeath() {
+		GameManagerScript.gameManager.EndGame();
+	}
+
+	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.CompareTag("Enemy")) {
 			HUDHealthScript.UpdateInfo();
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D coll) {
+		if (coll.gameObject.CompareTag("PowerUp")) {
+			PowerUpScript powerUp = coll.gameObject.GetComponent<PowerUpScript>();
+			RetrievePowerUp(powerUp);
 		}
 	}
 
